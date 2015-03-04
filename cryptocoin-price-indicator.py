@@ -141,8 +141,6 @@ class CryptoCoinPriceIndicator:
         self.BTCtickers = None
         self.btceBTC = gtk.RadioMenuItem(self.BTCtickers,"BTC-E"); self.btceBTC.connect("activate", lambda x: self.toggleBTCdisplay("btce")); self.btceBTC.show()
         self.BTCtickers = self.btceBTC
-        self.mtgoxBTC = gtk.RadioMenuItem(self.BTCtickers,"MtGox"); self.mtgoxBTC.connect("activate", lambda x: self.toggleBTCdisplay("mtgox")); self.mtgoxBTC.show()
-        self.BTCtickers = self.mtgoxBTC
         self.bitstampBTC = gtk.RadioMenuItem(self.BTCtickers,"BitStamp"); self.bitstampBTC.connect("activate", lambda x: self.toggleBTCdisplay("bitstamp")); self.bitstampBTC.show()
         self.BTCtickers = self.bitstampBTC
         self.blockchainBTC = gtk.RadioMenuItem(self.BTCtickers,"BlockChain"); self.blockchainBTC.connect("activate", lambda x: self.toggleBTCdisplay("blockchain")); self.blockchainBTC.show()
@@ -150,7 +148,6 @@ class CryptoCoinPriceIndicator:
 
         self.defSet = gtk.MenuItem("Choose exchange : "); self.defSet.show()
         self.menu.append(self.defSet)
-        self.menu.append(self.mtgoxBTC); self.menu.append(self.btceBTC)
         self.menu.append(self.bitstampBTC); self.menu.append(self.blockchainBTC)
 
         self.setRefreshMenu(self.menu)
@@ -355,17 +352,6 @@ class CryptoCoinPriceIndicator:
     def update_priceBTC(self):
         dataOut = ""
         priceNow = BAD_RETRIEVE
-
-        priceNow = self.getMtGoxData("")
-        if priceNow == BAD_RETRIEVE:
-            priceNow = "TempDown"
-        else:
-            priceNow = str(priceNow)+" USD"
-        if "mtgox" in self.exchange:
-            dataOut = dataOut + ' | ' if dataOut != "" else dataOut
-            dataOut = dataOut + "MtGox: "+priceNow
-        self.mtgoxBTC.set_label("MtGox| "+str(priceNow))
-
         priceNow = self.getBTCEDataUSD("")
         if priceNow == BAD_RETRIEVE:
             priceNow = "TempDown"
